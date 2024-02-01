@@ -11,14 +11,14 @@ import lombok.Setter;
 @Setter
 @Table(name="board_table") //테이블 이름 따로 정해주고 싶을 때 사용
 public class BoardEntity extends BaseEntity{
-    @Id // pk 컬럼 지정, 필수
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment(mySQL 기준)
+    @Id // pk 컬럼 지정. 필수
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
 
-    @Column(length=20, nullable = false) // 크기 20, null 불가능
+    @Column(length = 20, nullable = false) // 크기 20, not null
     private String boardWriter;
 
-    @Column // 디폴트 값(크기 255, null 가능)
+    @Column // 크기 255, null 가능
     private String boardPass;
 
     @Column
@@ -30,15 +30,13 @@ public class BoardEntity extends BaseEntity{
     @Column
     private int boardHits;
 
-    public static BoardEntity toSaveEntity(BoardDTO boardDTO){
+    public static BoardEntity toSaveEntity(BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();
-
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardEntity.getBoardContents());
+        boardEntity.setBoardContents(boardDTO.getBoardContents());
         boardEntity.setBoardHits(0);
-
         return boardEntity;
     }
 }

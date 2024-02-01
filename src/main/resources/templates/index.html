@@ -5,11 +5,11 @@
     <title>index</title>
 </head>
 <body>
-  <form th:action="@{/board/save}" method="post">
+  <form th:action="@{/board/save}">
       <input type="submit" value="글 작성">
   </form>
+  <form th:action="@{/board/}">
+      <input type="submit" value="글 목록">
+  </form>
 </body>
-<script>
-
-</script>
 </html>
