@@ -33,8 +33,9 @@ public class BoardService {
         return boardDTOList;
     }
 
+    @Transactional
     public void updateHits(Long id){
-        boardRepository.updatehits(id);
+        boardRepository.updateHits(id);
     }
 
     @Transactional
