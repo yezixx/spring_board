@@ -34,10 +34,10 @@
 <form th:action="@{/board/}">
     <input type="submit" value="목록">
 </form>
-<form th:action="@{/board/update/{id}}">
+<form th:action="@{|/board/update/${id}|}">
     <input type="submit" value="수정">
 </form>
-<form th:action="@{/board/delete/{id}}">
+<form th:action="@{|/board/delete/${id}}|">
     <input type="submit" value="삭제">
 </form>
 </body>
