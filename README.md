@@ -16,3 +16,5 @@
 - 제목, 내용 수정 입력 받아서 서버로 요청
 - 수정 처리
 5. 글삭제(/board/delete/{id})
+6. 페이징 처리(/board/paging/)
+- /board/paging?page=2

@@ -3,6 +3,9 @@ package com.example.spring_board.controller;
 import com.example.spring_board.dto.BoardDTO;
 import com.example.spring_board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -58,5 +61,18 @@ public class BoardController {
         model.addAttribute("board", board);
         return "detail";
 //         return "redirect:/board/"+boardDTO.getId(); // redirect로 /board/{id}하게 되면 조회수 올라가므로..
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        boardService.delete(id);
+        return "redirect:/board/";
+    }
+
+    // /board/paging?page=1
+    @GetMapping("/paging")
+    public String paging(@PageableDefault(page=1) Pageable pageable, Model model){
+        // pageable.getPageNumber();
+        Page<BoardDTO> boardList = boardService.paging(pageable);
     }
 }
