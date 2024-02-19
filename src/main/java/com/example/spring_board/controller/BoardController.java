@@ -74,5 +74,24 @@ public class BoardController {
     public String paging(@PageableDefault(page=1) Pageable pageable, Model model){
         // pageable.getPageNumber();
         Page<BoardDTO> boardList = boardService.paging(pageable);
+        int blockLimit = 3; // 하단에 보여지는 페이지 개수
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages(); // 3 6 9 12 ~~
+
+
+        // page 개수 20개 라고하면 (& 페이지당 보여지는 글 개수는 3개)
+        // 현재 사용자가 3페이지를 보고있다고 가정
+        // 1 2 3 에서 현재 보고있는 페이지는 색을 다르게 한다든지 구분되도록
+        // 보여지는 페이지 개수 3개
+        // 1 2 3
+        // 현재 사용자가 7페이지를 보고있다면
+        // 7 8 9
+        // 총 페이지 개수 8개? & 현재 사용자가 7페이지? -> 7 8 (9 띄우면 안됨)
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "paging";
     }
 }

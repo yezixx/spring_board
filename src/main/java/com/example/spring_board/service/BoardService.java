@@ -68,7 +68,12 @@ public class BoardService {
         int page=pageable.getPageNumber()-1;
         int pageLimit = 3; // 한 페이지에 보여줄 글 개수
         // 한 페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
+        // page 위치에 있는 값은 0부터 시작
         Page<BoardEntity> boardEntities =
                 boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        // 목록에 보여지는 것만 가져가면 됨 -> id, writer, title, hits, createdTime
+        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
+        return boardDTOS;
     }
 }
