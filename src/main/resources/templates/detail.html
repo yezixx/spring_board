@@ -31,7 +31,7 @@
         <td th:text="${board.boardContents}"></td>
     </tr>
 </table>
-<form th:action="@{/board/}">
+<form th:action="@{/board/paging?page=${page}}">
     <input type="submit" value="목록">
 </form>
 <form th:action="@{|/board/update/${id}|}">
