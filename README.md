@@ -1,3 +1,6 @@
+# 강의 링크
+https://youtube.com/playlist?list=PLV9zd3otBRt7jmXvwCkmvJ8dH5tR_20c0&si=YuWy2oPe-Wz3yA_5
+
 # 개발환경
 1. IDE: IntelliJ IDEA Community
 2. Spring Boot 3.2.1
