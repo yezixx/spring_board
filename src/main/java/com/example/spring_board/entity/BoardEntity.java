@@ -34,7 +34,7 @@ public class BoardEntity extends BaseEntity{
     private int boardHits;
 
     @Column
-    private int fileAttached; // 있으면 1, 없으면 0
+    private int fileAttached; // 1 or 0
 
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();

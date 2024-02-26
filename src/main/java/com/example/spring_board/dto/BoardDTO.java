@@ -46,6 +46,19 @@ public class BoardDTO {
         boardDTO.setBoardHits(boardEntity.getBoardHits());
         boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
         boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
+
+        if(boardEntity.getFileAttached() == 0){
+            boardDTO.setFileAttached(boardEntity.getFileAttached());
+        }else{
+            boardDTO.setFileAttached(boardEntity.getFileAttached());
+            // 파일 이름을 가져가야 함. datail.html의 storedFileName에
+            // originalFileName, storedFileName -> board_file_table(boardFileEntity)에 있음
+            // join 문법
+            // select * from board_table b, board_file_table bf where b.id=bf.board_id and where b.id=?
+            boardDTO.setOriginalFileName(boardEntity.getBoardFileEntityList().get(0).getOriginalFileName());
+            // 엔티티에 있는 보드파일엔티티리스트(자식데이터들)에 접근하여 첫번째 인덱스에 있는 값의 오리지널파일네임
+            boardDTO.setStoredFileName(boardEntity.getBoardFileEntityList().get(0).getStoredFileName());
+        }
         return boardDTO;
     }
 }
