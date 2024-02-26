@@ -2,6 +2,8 @@ package com.example.spring_board.service;
 
 import com.example.spring_board.dto.BoardDTO;
 import com.example.spring_board.entity.BoardEntity;
+import com.example.spring_board.entity.BoardFileEntity;
+import com.example.spring_board.repository.BoardFileRepository;
 import com.example.spring_board.repository.BoardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
-    private  final BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
+    private final BoardFileRepository boardFileRepository;
     public void save(BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따라 로직 분리
         if(boardDTO.getBoardFile().isEmpty()) {
@@ -48,6 +51,12 @@ public class BoardService {
             String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
             String savePath = "C:/springboot_img/" + storedFileName; // 4. C:/springboot_img/9802398403948_내사진.jpg
             boardFile.transferTo(new File(savePath)); // 5.
+            BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO); // id값 없음
+            Long savedId = boardRepository.save(boardEntity).getId();
+            BoardEntity board = boardRepository.findById(savedId).get(); // 부모 엔티티 가져옴
+
+            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
+            boardFileRepository.save(boardFileEntity);
         }
     }
 
